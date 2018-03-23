@@ -10,7 +10,9 @@ info = conn.getresponse()
 
 for element in info:
     print(element)
-    print("El medicamento", element['results']['0']['id'])
+    print("El identificador es", element['results'][0]['id'])
+    print("El proposito del producto es", element['results'][0]['purpose'])
+    print("El nombre del fabricante es", element['results'][0]['openfda']['manufacturer_name'])
 
 print(info)
 conn.close()
