@@ -10,7 +10,7 @@ info = conn.getresponse()
 
 for element in info:
     print(element)
-    #print("El medicamento buscado es", element['results']['0']['id'])
+    print("El medicamento", element['results']['0']['id'])
 
 print(info)
 conn.close()
