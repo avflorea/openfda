@@ -7,6 +7,12 @@ conn.request("GET", "/drug/label.json?&limit=20", None, headers)
 
 info = conn.getresponse()
 
+print(info.status, info.reason)
+repos_raw = info.read().decode("utf-8")
+conn.close()
+
+repos = json.loads(repos_raw)
+
 for element in info:
     print(element)
     print("El identificador es", element['results'][0]['id'])
