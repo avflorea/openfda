@@ -16,8 +16,9 @@ repos_raw = info.read().decode("utf-8")
 
 datos = dict(json.loads(repos_raw))
 
-print(datos['results'][0]['id'])
-for element in info:#datos['results'][0]['id']:
-    print(element)
+for element in datos:
+    print(datos['results'][0]['id'])
+#for element in info:#datos['results'][0]['id']:
+ #   print(element)
 
 conn.close()
