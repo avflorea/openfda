@@ -14,8 +14,9 @@ repos_raw = info.read().decode("utf-8")
 
 datos = (json.loads(repos_raw))
 
-for element in datos:
+for element in datos['results']:
     print(element, datos['results'][0]['id'])
+
 
 
 
