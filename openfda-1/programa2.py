@@ -8,15 +8,14 @@ conn.request("GET", "/drug/label.json?&limit=10", None, headers)
 info = conn.getresponse()
 
 print(info)
-for element in info:
-    print(element)
 
- print(info.status, info.reason)
+print(info.status, info.reason)
 repos_raw = info.read().decode("utf-8")
 
 datos = (json.loads(repos_raw))
-for i in datos:
-     print(datos['results'][0]['id'])
+
+for element in datos:
+    print(element, datos['results'][0]['id'])
 
 
 
