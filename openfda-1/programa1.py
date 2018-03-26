@@ -25,7 +25,7 @@ datos = json.loads(repos_raw)
 
 # Imprimimos la id, el proposito y el fabricante del medicamento
 print("El identificador del medicamento es", datos['results'][0]['id'])
-print("El proposito del producto es", datos['results'][0]['purpose'])
+print("El propósito del producto es", datos['results'][0]['purpose'])
 print("El nombre del fabricante es", datos['results'][0]['openfda']['manufacturer_name'])
 
 conn.close()
