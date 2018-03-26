@@ -3,22 +3,36 @@ import json
 headers = {'User-Agent': 'http-client'}
 
 conn = http.client.HTTPSConnection("api.fda.gov")
-conn.request("GET", "/drug/label.json?&limit=20", None, headers)
+conn.request("GET", "/drug/label.json?&limit=10", None, headers)
 
 info = conn.getresponse()
 
 print(info)
+for element in info:
+    print(element)
 
-
-print(info.status, info.reason)
-
+ print(info.status, info.reason)
 repos_raw = info.read().decode("utf-8")
 
-datos = dict(json.loads(repos_raw))
+datos = (json.loads(repos_raw))
+for i in datos:
+     print(datos['results'][0]['id'])
 
-for element in datos:
-    print(datos['results'][0]['id'])
-#for element in info:#datos['results'][0]['id']:
+
+
+#for element in datos:
+ #   print(element, ":", datos[element])
+  #  print(datos['results'][0]['id'])
+#datos2 = datos.keys()
+#datos3 = datos.values()
+
+
+#elements = datos.items()
+#for datos2,datos3 in datos.items():
+ #   print(datos2,'-->',datos3)
+#for element in datos['results'][0]:
  #   print(element)
+
+#print(datos['results'][0]['id'])
 
 conn.close()
