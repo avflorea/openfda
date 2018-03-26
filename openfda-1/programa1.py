@@ -7,7 +7,7 @@ conn = http.client.HTTPSConnection("api.fda.gov")
 
 # Enviamos un mensaje de solicitud con el GET y el recurso seguido de un limite
 # que será el número de medicamentos que queremos que aparezcan en pantalla
-conn.request("GET", "/drug/label.json?&limit=20", None, headers)
+conn.request("GET", "/drug/label.json?&limit=1", None, headers)
 
 # Leemos el mensaje de respuesta recibido del servidor
 info = conn.getresponse()
