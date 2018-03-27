@@ -4,7 +4,7 @@ import json
 
 # Configuracion del servidor: IP, Puerto
 IP = "192.168.1.133"
-PORT = 8080
+PORT = 8088
 MAX_OPEN_REQUESTS = 5
 
 headers = {'User-Agent': 'http-client'}
@@ -19,10 +19,23 @@ print(info.status, info.reason)
 drogas_raw = info.read().decode("utf-8")
 
 datos = (json.loads(drogas_raw))
-for elem in datos['results']:
-    datos2 = (elem['openfda'])
-    for element in datos2:
-        print(element['generic_name'])
+
+num = 0
+while num<10:
+    datos2 = datos['results'][num]
+    print(datos2['id'])
+    num +=1
+    #num2 = 0
+    #while num2<10:
+     #   datos4 = datos3['manufacturer_name']
+      #  print(datos4)
+       # num2 +=1
+
+#for elem in datos['results']:
+ #   datos2 = (elem['openfda'])
+  #  for element in datos2:
+   #     print(element['generic_name'])
+
 
 def process_client(clientsocket):
     """Funcion que atiende al cliente. Lee su peticion (aunque la ignora)
@@ -42,11 +55,10 @@ def process_client(clientsocket):
     contenido = """
       <!doctype html>
       <html>
-      <body style='background-color: white'>
-        <h1>Hola! Soy Andreea!
-        Que tal estas? </h2>
-        <p> 
-      </body>
+      <body style='background-color: lightgreen'>
+        <h1>Bienvenid@ </h1>
+        <h2> Medicamentos </h2>
+      </body> 
       </html>
     """
 
