@@ -4,7 +4,7 @@ import json
 
 # Configuracion del servidor: IP, Puerto
 IP = "192.168.1.133"
-PORT = 8081
+PORT = 8080
 MAX_OPEN_REQUESTS = 5
 
 headers = {'User-Agent': 'http-client'}
@@ -16,11 +16,13 @@ conn.request("GET", "/drug/label.json?&limit=20", None, headers)
 info = conn.getresponse()
 print(info.status, info.reason)
 
-repos_raw = info.read().decode("utf-8")
+drogas_raw = info.read().decode("utf-8")
 
-datos = json.loads(repos_raw)
+datos = (json.loads(drogas_raw))
 for elem in datos['results']:
-     datos2 = (elem['id'])
+    datos2 = (elem['openfda'])
+    for element in datos2:
+        print(element['generic_name'])
 
 def process_client(clientsocket):
     """Funcion que atiende al cliente. Lee su peticion (aunque la ignora)
@@ -43,7 +45,7 @@ def process_client(clientsocket):
       <body style='background-color: white'>
         <h1>Hola! Soy Andreea!
         Que tal estas? </h2>
-        <p></p>
+        <p> 
       </body>
       </html>
     """
