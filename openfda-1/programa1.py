@@ -18,10 +18,10 @@ print(info)
 print(info.status, info.reason)
 
 # Leemos el contenido de la respuesta y lo convertimos a una cadena
-repos_raw = info.read().decode("utf-8")
+drogas_raw = info.read().decode("utf-8")
 
 # Imprimimos ese fichero que ha sido recibido
-datos = json.loads(repos_raw)
+datos = json.loads(drogas_raw)
 
 # Imprimimos la id, el proposito y el fabricante del medicamento
 print("El identificador del medicamento es", datos['results'][0]['id'])
