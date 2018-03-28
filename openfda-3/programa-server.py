@@ -3,8 +3,8 @@ import http.client
 import json
 
 # Configuracion del servidor: IP, Puerto
-IP = "192.168.1.133"
-PORT = 8088
+IP = "192.168.1.134"
+PORT = 8000
 MAX_OPEN_REQUESTS = 5
 
 headers = {'User-Agent': 'http-client'}
@@ -20,47 +20,39 @@ drogas_raw = info.read().decode("utf-8")
 
 datos = (json.loads(drogas_raw))
 
-num = 0
-while num<10:
-    datos2 = datos['results'][num]
-    print(datos2['id'])
-    num +=1
+#num = 0
+#while num<10:
+    #datos2 = datos['results'][num]
+    #print(datos2['id'])
+    #num +=1
     #num2 = 0
     #while num2<10:
      #   datos4 = datos3['manufacturer_name']
       #  print(datos4)
        # num2 +=1
 
-#for elem in datos['results']:
- #   datos2 = (elem['openfda'])
-  #  for element in datos2:
-   #     print(element['generic_name'])
 
+#for i in datos['results']:
+ #   (i['id'])
 
 def process_client(clientsocket):
-    """Funcion que atiende al cliente. Lee su peticion (aunque la ignora)
-       y le envia un mensaje de respuesta en cuyo contenido hay texto
-       en HTML que se muestra en el navegador"""
-
-    # Leemos a traves del socket el mensaje de solicitud del cliente
-    # Pero no hacemos nada con el. Lo descartamos: con independencia de
-    # lo que nos pida, siempre le devolvemos lo mismo
 
     mensaje_solicitud = clientsocket.recv(1024)
 
-    # Empezamos definiendo el contenido, porque necesitamos saber cuanto
-    # ocupa para indicarlo en la cabecera
-    # En este contenido pondremos el texto en HTML que queremos que se
-    # visualice en el navegador cliente
     contenido = """
       <!doctype html>
       <html>
-      <body style='background-color: lightgreen'>
+      <body style='background-color: white'>
         <h1>Bienvenid@ </h1>
         <h2> Medicamentos </h2>
-      </body> 
-      </html>
     """
+    for i in datos['results']:
+        #(elem['id'])
+        contenido += i
+        contenido += """
+        </body> 
+        </html>
+        """
 
 
 
