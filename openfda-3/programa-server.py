@@ -4,7 +4,7 @@ import json
 
 # Configuracion del servidor: IP, Puerto
 IP = "192.168.1.134"
-PORT = 8004
+PORT = 8080
 MAX_OPEN_REQUESTS = 5
 def introduce_datos():
     lista_drogas = []
@@ -19,9 +19,10 @@ def introduce_datos():
         info_drogas = datos['results'][i]
         if (info_drogas['openfda']):
             lista_drogas.append(info_drogas['openfda']['generic_name'][0])
-            print(lista_drogas[i])
+            print(lista_drogas[i-1])
         else:
-            break
+            continue
+
 
 def process_client(clientsocket):
 
