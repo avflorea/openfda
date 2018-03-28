@@ -33,6 +33,6 @@ for i in range(len(datos['results'])):
         lista_drogas.append(info_drogas['id'])
         print("El identificador es:", lista_drogas[i]) # Imprime el 'id' de cada elemento
     else:
-        break
+        continue
 
 conn.close()
