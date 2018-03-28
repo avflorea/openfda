@@ -10,7 +10,7 @@ def introduce_datos():
     lista_drogas = []
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
-    conn.request("GET", "/drug/label.json?&limit=20", None, headers)
+    conn.request("GET", "/drug/label.json?&limit=10", None, headers)
     info = conn.getresponse()
     print(info.status, info.reason)
     drogas_raw = info.read().decode("utf-8")
