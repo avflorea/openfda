@@ -1,6 +1,6 @@
 import http.client
 import json
-lista_drogas = []
+lista_drogas = [] #Creamos una lista vacia donde añadiremos los datos de los medicamentos
 
 headers = {'User-Agent': 'http-client'}
 
