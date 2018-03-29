@@ -32,7 +32,7 @@ for elem in range(len(datos['results'])):
     if (info_drogas['id']): # Cuando encuentre el 'id' añade esa informacion a la lista de drogas
         lista_drogas.append(info_drogas['id'])
         print("El identificador es:", lista_drogas[elem]) # Imprime el 'id' de cada elemento
-    else: # Si no encuentra el 'id' se iteran el resto de elementos
+    else: # Si no encuentra el 'id' se iteran el resto de elementos y el programa continua
         continue
 
 conn.close()
