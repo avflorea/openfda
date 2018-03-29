@@ -27,11 +27,11 @@ datos = json.loads(drogas_raw)
 
 # Imprimimos la id de los 10 medicamentos utilizando un bucle
 # Recorremos la lista de 'results', en este caso 10 veces por el limite que hemos añadido
-for i in range(len(datos['results'])):
-    info_drogas = datos['results'][i] # Creamos una lista con cada medicamento
+for elem in range(len(datos['results'])):
+    info_drogas = datos['results'][elem] # Creamos una lista con cada medicamento
     if (info_drogas['id']): # Cuando encuentre el 'id' añade esa informacion a la lista del principio
         lista_drogas.append(info_drogas['id'])
-        print("El identificador es:", lista_drogas[i]) # Imprime el 'id' de cada elemento
+        print("El identificador es:", lista_drogas[elem]) # Imprime el 'id' de cada elemento
     else:
         continue
 
