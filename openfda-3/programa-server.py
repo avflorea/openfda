@@ -3,25 +3,17 @@ import http.client
 import json
 
 # Configuracion del servidor: IP, Puerto
-IP = "192.168.1.134"
+IP = "192.168.1.135"
 PORT = 8080
 MAX_OPEN_REQUESTS = 5
-def introduce_datos():
-    lista_drogas = []
-    headers = {'User-Agent': 'http-client'}
-    conn = http.client.HTTPSConnection("api.fda.gov")
-    conn.request("GET", "/drug/label.json?&limit=10", None, headers)
-    info = conn.getresponse()
-    print(info.status, info.reason)
-    drogas_raw = info.read().decode("utf-8")
-    datos = (json.loads(drogas_raw))
-    for i in range(len(datos['results'])):
-        info_drogas = datos['results'][i]
-        if (info_drogas['openfda']):
-            lista_drogas.append(info_drogas['openfda']['generic_name'][0])
-            print(lista_drogas[i-1])
-        else:
-            continue
+lista_drogas = []
+headers = {'User-Agent': 'http-client'}
+conn = http.client.HTTPSConnection("api.fda.gov")
+conn.request("GET", "/drug/label.json?&limit=10", None, headers)
+info = conn.getresponse()
+print(info.status, info.reason)
+drogas_raw = info.read().decode("utf-8")
+datos = (json.loads(drogas_raw))
 
 
 def process_client(clientsocket):
@@ -35,9 +27,15 @@ def process_client(clientsocket):
         <h1>Bienvenid@ </h1>
         <h2> Medicamentos </h2>
     """
-    for i in range(len(introduce_datos())):
-        contenido += i
-        contenido += """</body></html>"""
+    for elem in range(len(datos['results'])):
+        info_drogas = datos['results'][elem]
+        if (info_drogas['openfda']):
+            lista_drogas.append(info_drogas['openfda']['generic_name'][0])
+            print(lista_drogas[elem-1])
+        else:
+            continue
+        contenido += lista_drogas[elem-1]
+        contenido += """<br/></body></html>"""
 
     linea_inicial = "HTTP/1.1 200 OK\n"
     cabecera = "Content-Type: text/html\n"
