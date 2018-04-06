@@ -1,6 +1,5 @@
 import http.client
 import json
-lista_drogas = [] #Creamos una lista vacia donde añadiremos los datos de los medicamentos
 
 headers = {'User-Agent': 'http-client'}
 
@@ -27,11 +26,9 @@ datos = json.loads(drogas_raw)
 
 # Imprimimos la id de los 10 medicamentos utilizando un bucle
 # Recorremos la lista de 'results', en este caso 10 veces por el limite que hemos añadido
-for elem in range(len(datos['results'])):
-    info_drogas = datos['results'][elem] # Creamos una lista con cada medicamento
-    if (info_drogas['id']): # Cuando encuentre el 'id' añade esa informacion a la lista de drogas
-        lista_drogas.append(info_drogas['id'])
-        print("El identificador es:", lista_drogas[elem]) # Imprime el 'id' de cada elemento
+for elem in datos['results']:
+    if elem['id']: # Cuando encuentre el 'id'
+        print("El identificador es:", elem['id']) # Imprime el 'id' de cada elemento
     else: # Si no encuentra el 'id' se iteran el resto de elementos y el programa continua
         continue
 
