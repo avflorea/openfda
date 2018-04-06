@@ -30,6 +30,7 @@ for elem in datos['results']:
     if elem['id']: # Cuando encuentre el 'id'
         print("El identificador es:", elem['id']) # Imprime el 'id' de cada elemento
     else: # Si no encuentra el 'id' se iteran el resto de elementos y el programa continua
+        print("El medicamento no tiene ningun tipo de identificador")
         continue
 
 conn.close()
