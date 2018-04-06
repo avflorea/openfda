@@ -3,17 +3,15 @@ import http.client
 import json
 
 # Configuramos el servidor: IP, Puerto
-IP = "192.168.1.135"
-PORT = 8080
+IP = "212.128.255.131"
+PORT = 8088
 # Determinamos el maximo de peticiones que puede realizar el cliente
 MAX_OPEN_REQUESTS = 5
-# Creamos una lista vacia donde añadiremos los datos de los medicamentos
-lista_drogas = []
 headers = {'User-Agent': 'http-client'}
 # Hacemos que el cliente se conecte con el servidor
 conn = http.client.HTTPSConnection("api.fda.gov")
 # Enviamos un mensaje de solicitud con el GET y el recurso seguido de un limite
-conn.request("GET", "/drug/label.json?&limit=10", None, headers)
+conn.request("GET", "/drug/label.json?&limit=11", None, headers)
 # Leemos el mensaje de respuesta recibido del servidor
 info = conn.getresponse()
 # Imprimimos la linea del estado de respuesta
@@ -36,24 +34,19 @@ def process_client(clientsocket):
     contenido = """
       <!doctype html>
       <html>
-      <body style='background-color: white'>
+      <body style='background-color: lightgreen'>
         <h1>Bienvenid@ </h1>
         <h2> Medicamentos </h2>
     """
     ## Recorremos la lista de 'results', en este caso 10 veces por el limite que hemos añadido
-    for elem in range(len(datos['results'])):
-        info_drogas = datos['results'][elem] # Creamos una lista con cada medicamento
-    # Cuando encuentre el 'openfda', añadira a la lista de drogas el nombre generico de los 10
-    # medicamentos
-        if (info_drogas['openfda']):
-            lista_drogas.append(info_drogas['openfda']['generic_name'][0])
-            print(lista_drogas[elem-1]) # Imprimimos el nombre de esos medicamentos, utilizamos
-            # 'elem -1' porque sino estariamos fuera del rango de la lista
+    for elem in datos['results']:
+        if elem['openfda']:
+            print("El nombre del medicamento es:", elem['openfda']['generic_name'][0])
         else: # Si no se encuentra el 'openfda', el programa continua iterando los demas elementos
             continue
         # Renovamos el contenido para que los nombres de los medicamentos para que aparezcan por el
         # navegador
-        contenido += lista_drogas[elem-1]
+        contenido += elem['openfda']['generic_name'][0]
         # Determinamos que cada vez que nos de un nombre realice un salto de linea y cerramos el HTML
         contenido += """<br/></body></html>"""
 
