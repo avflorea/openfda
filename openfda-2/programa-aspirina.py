@@ -19,10 +19,12 @@ datos = (json.loads(drogas_raw))
 
 # Para evitar posibles errores, utilizamos un try-except, ya que al buscar el nombre del fabricante de los
 # medicamentos que tienen ese principio activo nos saldran 4 resultados, de los cuales hay dos que se desconoce el nombre
-try:
-    for element in datos['results']: # Utilizamos un bucle mas simple para determinar los nombres de los fabricantes
-        print("Los fabricantes que producen aspirinas son: ",element['openfda']['manufacturer_name'])
-        continue
-except KeyError:
-    print("No tenemos datos del fabricante de este medicamento")
+for element in datos['results']:
+    print("El medicamento de id:", element['id'])
+    if element['openfda']:
+        print("Tiene como fabricante:",element['openfda']['manufacturer_name'])
+    # Utilizamos un bucle mas simple para determinar los nombres de los fabricantes
+    else:
+        print("No tenemos datos del fabricante de este medicamento")
+
 conn.close()
