@@ -17,14 +17,13 @@ drogas_raw = info.read().decode("utf-8")
 # Imprimimos ese fichero que ha sido recibido
 datos = (json.loads(drogas_raw))
 
-# Para evitar posibles errores, utilizamos un try-except, ya que al buscar el nombre del fabricante de los
-# medicamentos que tienen ese principio activo nos saldran 4 resultados, de los cuales hay dos que se desconoce el nombre
+# Al buscar el nombre del fabricante de los medicamentos que tienen ese principio activo nos saldran 4 resultados,
+# de los cuales hay dos que se desconoce el nombre
 for element in datos['results']:
     print("El medicamento de id:", element['id'])
     if element['openfda']:
-        print("Tiene como fabricante:",element['openfda']['manufacturer_name'])
-    # Utilizamos un bucle mas simple para determinar los nombres de los fabricantes
+        print("Tiene como fabricante:",element['openfda']['manufacturer_name'][0])
     else:
         print("No tenemos datos del fabricante de este medicamento")
-
+        continue
 conn.close()
