@@ -3,7 +3,7 @@ import http.client
 import json
 
 # Configuramos el servidor: IP, Puerto
-IP = "212.128.255.131"
+IP = "127.0.0.1"
 PORT = 8088
 # Determinamos el maximo de peticiones que puede realizar el cliente
 MAX_OPEN_REQUESTS = 5
@@ -38,11 +38,12 @@ def process_client(clientsocket):
         <h1>Bienvenid@ </h1>
         <h2> Medicamentos </h2>
     """
-    ## Recorremos la lista de 'results', en este caso 10 veces por el limite que hemos añadido
+    # Recorremos la lista de 'results', en este caso 11 veces por el limite que hemos añadido
     for elem in datos['results']:
         if elem['openfda']:
             print("El nombre del medicamento es:", elem['openfda']['generic_name'][0])
         else: # Si no se encuentra el 'openfda', el programa continua iterando los demas elementos
+            print("No se tienen datos del nombre del producto")
             continue
         # Renovamos el contenido para que los nombres de los medicamentos para que aparezcan por el
         # navegador
