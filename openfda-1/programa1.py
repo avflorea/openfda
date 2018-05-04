@@ -2,7 +2,7 @@ import http.client
 import json
 headers = {'User-Agent': 'http-client'}
 
-# Nos conectamos con el servidor dando por hecho que el puerto es 8000
+# Nos conectamos con el servidor dando por hecho que el puerto es 80
 conn = http.client.HTTPSConnection("api.fda.gov")
 
 # Enviamos un mensaje de solicitud con el GET y el recurso seguido de un limite
