@@ -11,8 +11,9 @@ app = Flask(__name__)
 def buscar_medicam():
     ing_activo = request.args.get("active_ingredient")
     ing_activo = ing_activo.replace(" ", "%20")
-    json1 = openfda("/drug/label.json?search=active_ingredient:"+ing_activo+"&limit=10")
-    mi_html = crear_html(json1)
+    limit=request.args.get("limit")
+    json1 = openfda("/drug/label.json?search=active_ingredient:"+ing_activo+"&limit"+limit)
+    mi_html = openfdahtml(json1)
     return mi_html
 
 
@@ -20,24 +21,28 @@ def buscar_medicam():
 def buscar_compania():
     compania = request.args.get("manufacturer_name")
     compania = compania.replace(" ", "%20")
-    json1 = openfda("/drug/label.json?search=manufacturer_name:"+compania+"&limit=10")
-    mi_html = crear_html(json1)
+    limit=request.args.get("limit")
+    json1 = openfda("/drug/label.json?search=manufacturer_name:"+compania+"&limit"+limit)
+    mi_html = openfdahtml(json1)
     return mi_html
 
 
 @app.route("/listDrugs")
 def lista_medicam():
+    limit=request.args.get("limit")
     medicam = request.args.get("generic_name").replace(" ", "%20")
-    json1 = openfda("/drug/label.json?search=generic_name:"+medicam+"&limit=10")
-    mi_html = crear_html(json1)
+    json1 = openfda("/drug/label.json?search=generic_name:"+medicam+"&limit"+limit)
+    mi_html = openfdahtml(json1)
     return mi_html
 
 
 @app.route("/listCompanies")
 def lista_companias():
-    empresa = request.args.get("manufacturer_name").replace(" ", "%20")
-    json1 = openfda("/drug/label.json?search=manufacturer_name:"+empresa+"&limit=10")
-    mi_html = crear_html(json1)
+    limit=request.args.get("limit")
+    empresa = request.args.get("manufacturer_name")
+    empresa = empresa.replace(" ", "%20")
+    json1 = openfda("/drug/label.json?search=manufacturer_name:"+empresa+"&limit="+limit)
+    mi_html = openfdahtml(json1)
     return mi_html
 
 
@@ -56,19 +61,17 @@ def openfda(json1):
     if "results" in datos:
         for elem in datos['results']:
             if 'generic_name' in elem['openfda']:
-                medicamentos += str(elem['openfda']['generic_name'][0])
+                medicamentos += str(elem['openfda']['generic_name'])
                 medicamentos += "<br>"
             elif 'manufacturer_name' in elem['openfda']:
-                medicamentos += str(elem['openfda']['manufacturer_name'][0])
+                medicamentos += str(elem['openfda']['manufacturer_name'])
                 medicamentos += "<br>"
             else:
                 medicamentos += "No se tienen datos del nombre del producto"
                 medicamentos += "<br>"
                 continue
-    else:
-        medicamentos = "Desconocida"
-    return "<ul><li>{}</li></ul>".format(medicamentos)
 
+    return "<ul><li>{}</li></ul>".format(medicamentos)
 
 @app.route("/")
 def crear_html():
@@ -79,7 +82,10 @@ def crear_html():
     <h2 style="border: 2px solid orange;">Puntos de entrada</h2>
         <form action="/searchDrugs">
             1. Introduce el nombre del ingrediente activo del medicamento: <br>
+            Medicamentos <br>
             <input type="text"  name="active_ingredient" value=""><br>
+            Limite
+            <input type="text"  name="limit" value=""><br>
             <input type="submit"  value="Submit">
         </form><br/></body></html>"""
     contenido += """
@@ -88,42 +94,47 @@ def crear_html():
     <body>
         <form action="/searchCompany">
             2. Introduce la compañia que se desea buscar: <br>
+            Companias <br>
             <input type="text"  name="manufacturer_name" value=""><br>
+            Limite
+            <input type="text"  name="limit" value=""><br>
             <input type="submit"  value="Submit">
         </form><br/></body></html>"""
     contenido += """
-    <!doctype html >
+    <!doctype html>
     <html>
     <body>
         <form action="/listDrugs">
             3. Ver lista de fármacos: <br>
-            <input type="text"  name="limite" value=""><br>
+            Lista de farmacos <br>
+            Limite
+            <input type="text"  name="limit" value=""><br>
             <input type="submit"  value="Submit">
         </form><br/></body></html>"""
     contenido += """
-        <!doctype html >
+        <!doctype html>
         <html>
         <body>
             <form action="/listCompanies">
                 4. Ver lista de compañias: <br>
-                <input type="text"  name="limite" value=""><br>
+                Lista de Companias <br>
+                Limite
+                <input type="text"  name="limit" value=""><br> 
                 <input type="submit"  value="Submit">
             </form><br/></body></html>"""
     return contenido
 
 
 @app.route("/")
-def crear_html2(medicamentos):
+def openfdahtml(medicamentos):
     info = """
     <!doctype html>
     <html>
     <body style='background-color: lightcyan'>
-    <h2 style="border: 2px solid orange;">Puntos de entrada</h2>
+    <h2 style="border: 2px solid orange;">Medicamentos</h2>
     """
-    for medicam in medicamentos:
-
-        info += medicam
-        info += """<br/></body></html>"""
+    info += medicamentos
+    info += """<br/></body></html>"""
 
     return info
 
