@@ -17,7 +17,7 @@ def buscar_medicam():
 def buscar_compania():
     compania = request.args.get("company").replace(" ", "%20")
     #limit=request.args.get("limit")
-    json2 = openfda2("/drug/label.json?search=company:"+compania+"&limit=10")#+limit)
+    json2 = openfda2("/drug/label.json?search=manufacturer_name:"+compania+"&limit=10")#+limit)
     mi_html = openfdahtml(json2)
     return mi_html
 
@@ -189,17 +189,6 @@ def openfdahtml(medicamentos):
     info += """</ul><br/></body></html>"""
     return info
 
-@app.errorhandler(404)
-def page_not_found(e):
-    error="""
-    <!doctype html>
-    <html>
-    <body style='background-color: beige'>
-    <head><title>Error404</title></head>
-    <h1><b>ERROR404</b></h1>
-    <body><ul><ins>Pagina no encontrada, pruebe con otra url diferente</ins>
-    </ul></body></html>"""
-    return error
 
 @app.route("/secret")
 def autenticar_pag():
