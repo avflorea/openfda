@@ -8,17 +8,25 @@ app = Flask(__name__)
 @app.route("/searchDrug")
 def buscar_medicam():
     ing_activo = request.args.get("active_ingredient").replace(" ", "%20")
-    #limit=request.args.get("limit")
-    json1 = openfda1("/drug/label.json?search=active_ingredient:"+ing_activo+"&limit=10")#+limit)
-    mi_html = openfdahtml(json1)
+    limit=request.args.get("limit")
+    if limit:
+        json1 = openfda1("/drug/label.json?search=active_ingredient:"+ing_activo+"&limit="+limit)
+        mi_html = openfdahtml(json1)
+    else:
+        json1 = openfda1("/drug/label.json?search=active_ingredient:"+ing_activo+"&limit=10")
+        mi_html = openfdahtml(json1)
     return mi_html
 
 @app.route("/searchCompany")
 def buscar_compania():
     compania = request.args.get("company").replace(" ", "%20")
-    #limit=request.args.get("limit")
-    json2 = openfda2("/drug/label.json?search=manufacturer_name:"+compania+"&limit=10")#+limit)
-    mi_html = openfdahtml(json2)
+    limit=request.args.get("limit")
+    if limit:
+        json2 = openfda2("/drug/label.json?search=manufacturer_name:"+compania+"&limit="+limit)
+        mi_html = openfdahtml(json2)
+    else:
+        json1 = openfda1("/drug/label.json?search=manufacturer_name:"+compania+"&limit=10")
+        mi_html = openfdahtml(json1)
     return mi_html
 
 @app.route("/listDrugs")
@@ -132,6 +140,8 @@ def crear_html():
             <b><p>1. Introduce el nombre del ingrediente activo del medicamento:</b></p>
             <ins>Ingrediente activo </ins>
             <input type="text"  name="active_ingredient" value=""><br>
+            Limite
+            <input type="text"  name="limit" value=""><br>
             <input type="submit"  value="Submit">
         </form><br/></body></html>"""
     contenido += """
@@ -142,6 +152,8 @@ def crear_html():
             <b><p>2. Introduce la compañia que se desea buscar:</b></p>
             <ins>Compañia</ins>
             <input type="text"  name="company" value=""><br>
+            Limite
+            <input type="text"  name="limit" value=""><br>
             <input type="submit"  value="Submit">
         </form><br/></body></html>"""
     contenido += """
